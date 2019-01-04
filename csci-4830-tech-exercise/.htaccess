@@ -1,0 +1,39 @@
+DirectoryIndex index index.html index.php index.htm parking-page.html
+
+# Display PHP errors in console
+php_flag display_errors 1
+
+# Turn rewrite engine on
+RewriteEngine On
+
+# limit indexing of directories
+Options All -Indexes
+
+# Remove trailing slashes
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.+)/$ http://%{HTTP_HOST}/$1 [R=301,L]
+
+# removes php from files
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# removes html from files
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Redirect requests from www to http://
+RewriteCond %{HTTP_HOST} ^www\.(.*)$ [NC]
+RewriteRule ^(.*)$ http://%1%{REQUEST_URI} [R=301,QSA,NC,L]
+
+# Disable the server signature
+ServerSignature Off
+
+# limit file uploads to 100K
+LimitRequestBody 102400
+
+# redirect errors
+ErrorDocument 403 /assets/errors/403.php
+ErrorDocument 404 /assets/errors/404.php

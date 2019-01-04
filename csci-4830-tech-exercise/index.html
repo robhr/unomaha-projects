@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>CSCI4380: Tech Exercise</title>
+        <link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico" />
+        <link rel="stylesheet" type="text/css" href="./assets/styles/fonts.css"/>
+        <link rel="stylesheet" type="text/css" href="./assets/styles/rainbow.css" />
+        <link rel="stylesheet" type="text/css" href="./assets/styles/external/fontawesome/css/fontawesome-all.min.css">
+        <link rel="stylesheet" type="text/css" href="./assets/styles/external/bootstrap-darkly.min.css">
+        <link rel="stylesheet" type="text/css" href="./assets/styles/external/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" type="text/css" href="./assets/styles/external/responsive.bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="./assets/styles/external/toastr.min.css">
+        <link rel="stylesheet" type="text/css" href="./assets/styles/external/pell.css">
+        <link rel="stylesheet" type="text/css" href="./assets/styles/style.css">
+    </head>
+    <body class="container-fluid">
+        <div class="container">
+            <h1 class="rainbow header-title">CSCI 4380 Tech Exercise: Robert Herges</h1>
+            <table id="customer-list" class="table table-striped table-bordered dt-responsive nowrap">
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Package</th>
+                        <th>Last Payment</th>
+                        <th>Total Revenue</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: customers">
+                    <tr>
+                        <td><span class="clipboard" data-bind="text: fullName"></span></td>
+                        <td><span class="clipboard" data-bind="text: package"></span></td>
+                        <td><span class="clipboard" data-bind="text: moment(lastPayment).fromNow()"></span></td>
+                        <td><span class="clipboard" data-bind="text: new Intl.NumberFormat('en', { style: 'currency', currency: 'USD'}).format(totalRevenue)"></span></td>
+                        <td class="actions">
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#userInfoModal" data-bind="click: () => { $parent.selected($parent.customers()[$index()]); }">
+                                <i class="fas fa-info"></i>
+                            </button>&nbsp;
+                            <button class="btn btn-danger action-delete" data-toggle="modal" data-target="#userDeleteModal" data-bind="click: () => { $parent.selected($parent.customers()[$index()]); }">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <!-- Modals -->
+            <customer-add-modal></customer-add-modal>
+            <customer-info-modal params="selected: selected"></customer-info-modal>
+            <customer-delete-modal params="selected: selected"></customer-delete-modal>
+        </div>
+
+        <!-- include scripts -->
+        <script src="./assets/scripts/external/jquery-1.12.4.min.js"></script>
+        <script src="./assets/scripts/external/bootstrap.min.js"></script>
+        <script src="./assets/scripts/external/jquery.dataTables.min.js"></script>
+        <script src="./assets/scripts/external/dataTables.bootstrap4.min.js"></script>
+        <script src="./assets/scripts/external/dataTables.responsive.min.js"></script>
+        <script src="./assets/scripts/external/responsive.bootstrap.min.js"></script>
+        <script src="./assets/scripts/external/knockout-3.4.2.min.js"></script>
+        <script src="./assets/scripts/external/toastr.min.js"></script>
+        <script src="./assets/scripts/external/moment.js"></script>
+        <script src="./assets/scripts/external/pell.js"></script>
+        <script src="./assets/scripts/definitions.js"></script>
+        <script src="./assets/scripts/constants.js"></script>
+        <script src="./assets/scripts/utils.js"></script>
+        <script src="./assets/scripts/app.js"></script>
+
+        <!-- include unit testing framework (jasmine) -->
+        <script src="./assets/scripts/external/jasmine-3.1.0/jasmine.js"></script>
+        <script src="./assets/scripts/external/jasmine-3.1.0/jasmine-html.js"></script>
+        <script src="./assets/scripts/external/jasmine-3.1.0/boot.js"></script>
+        
+        <!-- include components -->
+        <script src="./assets/scripts/components/customer-add-modal/customer-add-modal.js"></script>
+        <script src="./assets/scripts/components/customer-info-modal/customer-info-modal.js"></script>
+        <script src="./assets/scripts/components/customer-delete-modal/customer-delete-modal.js"></script>
+    </body>
+</html>
